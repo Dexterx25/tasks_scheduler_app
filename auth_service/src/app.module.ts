@@ -1,11 +1,12 @@
 import { ConfigModule } from "@nestjs/config";
 import { Module } from "@nestjs/common";
 import { DatabaseModule } from "src/dataAccess/databases";
-import { GenericModule } from "./modules/payments/generic.module";
 import { ImplementationsModules } from "./dataAccess/implementations/implementations.module";
 import { ExceptionsModule } from "./configurations/exceptions";
 
 import * as dotenv from 'dotenv';
+import { UserModule } from "./modules/users/users.module";
+import { AuthModule } from "./modules/auth/auth.module";
 dotenv.config();
 
 
@@ -15,7 +16,8 @@ dotenv.config();
       isGlobal: true,
     }),
     DatabaseModule,
-    GenericModule,
+    UserModule,
+    AuthModule,
     ImplementationsModules,
     ExceptionsModule,
   ],

@@ -5,8 +5,6 @@ export * from './users';
 export * from './auth_refresh';
 export * from './roles'
 export * from './rolesUsers'
-export * from './products'
-export * from './productsUserDetails'
 export * from './timestamp'
 export * from './type_documents'
 export * from './user_details'

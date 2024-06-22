@@ -7,7 +7,7 @@ export class Auth extends Timestamps {
   @PrimaryGeneratedColumn("uuid")
   auth_id!: string;
 
-  @Column({ length: 250 })
+  @Column({ type: 'text'})
   access_token!: string;
   
   @Column({ type: "timestamp", select: false })

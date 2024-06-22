@@ -7,7 +7,6 @@ import { RolesUsers } from "../rolesUsers";
 import { AuthRefresh } from "../auth_refresh";
 import { Passwords } from "../passwords";
 import { UserDetails } from "../user_details";
-import { ProductsUsers } from "../productsUserDetails";
 
 export interface IUser {
   user_id?: string,
@@ -31,6 +30,10 @@ export class User extends Timestamps {
   @Column({ length: 200 })
   nikname!: string;
 
+  
+  @Column({ length: 200,  unique: true })
+  email!: string;
+
   @OneToOne(_type => Auth, auth => auth.user_id)
   auths!: Auth
 
@@ -50,7 +53,5 @@ export class User extends Timestamps {
   @OneToMany(_type => UserDetails, user_details => user_details.user_detail_id)
   userDetails!: UserDetails[]
 
-  @OneToMany(_type => ProductsUsers, productsUsers => productsUsers.user_id)
-   productsUsers!: ProductsUsers[]
 
 }

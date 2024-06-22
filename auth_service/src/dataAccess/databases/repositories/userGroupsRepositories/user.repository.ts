@@ -10,12 +10,14 @@ export class UserRepository extends RepositoryAbs {
         @InjectRepository(User)
         private readonly userRepository: MongoRepository<User>,
     ){super()}
-    async create(names, nikname, surnames,
-        ): Promise<User> {
+    async create({
+        names, nikname, surnames, email
+        }): Promise<User> {
      const intanceUser = await this.userRepository.create({
         names,
         nikname,
         surnames,
+        email,
      })
      return await this.userRepository.save(intanceUser)   
     }

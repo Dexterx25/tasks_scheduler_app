@@ -6,9 +6,6 @@ const config = {
     integrations: {
         generic_implementation: {
             envs: {
-                apiKey: process.env.APIKEY_EPAYCO,
-                privateKey: process.env.PRIVATEKEY_EPAYCO,
-                lang: process.env.LANG_EPAYCO || 'ES',
                 test: process.env.NODE_ENV === 'dev',
                 publicKey: process.env.PUBLIC_KEY
             },
