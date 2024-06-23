@@ -13,12 +13,12 @@ export class UserRepository extends RepositoryAbs {
     async create({
         names, nikname, surnames, email
         }): Promise<User> {
-     const intanceUser = await this.userRepository.create({
-        names,
-        nikname,
-        surnames,
-        email,
-     })
-     return await this.userRepository.save(intanceUser)   
+        const intanceUser = await this.userRepository.create({
+            names,
+            nikname,
+            surnames,
+            email,
+         })
+         return await this.userRepository.save(intanceUser)
     }
 }
