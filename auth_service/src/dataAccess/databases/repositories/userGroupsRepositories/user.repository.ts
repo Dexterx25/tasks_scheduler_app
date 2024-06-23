@@ -19,6 +19,6 @@ export class UserRepository extends RepositoryAbs {
             surnames,
             email,
          })
-         return await this.userRepository.save(intanceUser)
+         return intanceUser
     }
 }

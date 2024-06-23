@@ -24,6 +24,6 @@ export class AuthRepository extends RepositoryAbs {
       user_id,
       auth_id: uuidv4()
     })   
-     return await this.authRepository.save(instance)
+     return instance
     }
 }
