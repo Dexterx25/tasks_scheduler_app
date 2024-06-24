@@ -1,4 +1,4 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource, DataSourceOptions} from 'typeorm';
 import * as dotenv from 'dotenv';
 import { dbSet } from './utils/types';
 dotenv.config(); // Load environment variables from .env file

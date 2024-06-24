@@ -17,8 +17,9 @@ export class UserRepository extends RepositoryAbs {
             names,
             nikname,
             surnames,
-            email,
+            email
          })
          return intanceUser
     }
+    createQueryBuilder = this.userRepository.createQueryBuilder
 }

@@ -10,18 +10,33 @@ import {
   RolesUsers, 
   Timestamps, 
   TypeDocument, 
-  UserDetails} from 'src/dataAccess/databases/postgresql/entities';
+  UserDetails,
+  RolesPermissions,
+  Permissions} from 'src/dataAccess/databases/postgresql/entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     dataBaseProviderCustom,
-    TypeOrmModule.forFeature([User, Auth, Passwords, Timestamps, AuthRefresh, Roles, RolesUsers, TypeDocument, UserDetails]),
+    TypeOrmModule.forFeature([
+      User, 
+      Auth, 
+      Passwords, 
+      Timestamps, 
+      AuthRefresh, 
+      Roles, 
+      RolesUsers, 
+      TypeDocument, 
+      UserDetails,
+      RolesPermissions,
+      Permissions
+    ]),
     //PostgresDatabaseModule,
     // MongoDatabaseModule,
   ],
   exports: [
     dataBaseProviderCustom,
+    TypeOrmModule,
   ]
 })
 export class DatabaseModule {}

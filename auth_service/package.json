@@ -39,6 +39,7 @@
         "@nestjs/typeorm": "^10.0.0",
         "@newrelic/winston-enricher": "^4.0.1",
         "axios": "^1.5.1",
+        "bcrypt": "^5.1.1",
         "bcryptjs": "^2.4.3",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.0",
@@ -56,15 +57,18 @@
         "reflect-metadata": "^0.1.13",
         "rimraf": "^5.0.1",
         "rxjs": "^7.2.0",
+        "sqlite3": "^5.1.7",
         "swagger-ui-express": "^5.0.0",
         "tedis": "^0.1.12",
         "typeorm": "^0.3.20",
+        "typeorm-naming-strategies": "^4.1.0",
         "uuid": "^9.0.1"
     },
     "devDependencies": {
         "@nestjs/cli": "^9.0.0",
         "@nestjs/schematics": "^9.0.0",
         "@nestjs/testing": "^9.0.0",
+        "@types/bcrypt": "^5.0.2",
         "@types/bcryptjs": "^2.4.4",
         "@types/express": "^4.17.13",
         "@types/jest": "29.2.4",
@@ -125,7 +129,7 @@
             "@src/mocks": "<rootDir>/libs/mocks/src",
             "@src/structures/(.*)": "<rootDir>/libs/structures/src/$1",
             "@src/structures": "<rootDir>/libs/structures/src",
-            "@src/utils": "<rootDir>/libs/utils/src"
+            "@src/utils": "<rootDir>/src/utils"
         }
     }
 }

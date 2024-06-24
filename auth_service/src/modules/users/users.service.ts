@@ -1,61 +1,44 @@
 import { Injectable } from "@nestjs/common";
 import { UserRepository } from "src/dataAccess/databases/repositories";
-import { UserRegisterDTO } from "./DTO/input/user.dto";
-import { Passwords, User } from "src/dataAccess/databases/postgresql/entities";
-import { AuthService } from "../auth/auth.service";
-import { DataSource } from "typeorm";
+import { UserRegisterDTO } from "../auth/DTO/input/user.dto";
+import { User } from "src/dataAccess/databases/postgresql/entities";
+import { HandleErrorservice } from "src/configurations/exceptions";
+import { EnumErrorCodes } from "src/configurations/exceptions/constants";
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly authService: AuthService,
-    private dataSource: DataSource
+    private readonly handleErrorService: HandleErrorservice
   ) {}
  
-  public async createUser(data: UserRegisterDTO): Promise<ResponseCreateUser>{
-    const { names, nikname, surnames, email} = data;
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-    try {
+  public async createUser(data: UserRegisterDTO): Promise<User>{
+      const { names, nikname, surnames, email} = data;
       const dataUser: User = await this.userRepository.create({
         names,
         nikname,
         surnames,
         email
       })
-      
-      const passwordEncrypted: Passwords = await this.authService.createPassword({
-        is_vigent: true,
-        password: data.password,
-        user_id: dataUser.user_id,
-        salt: '123',
-      })  
-      
-      const { token } = await this.authService.SignCreateToken({
-        ...dataUser, 
-        password: passwordEncrypted.password
-      }) 
-      
-      const dataAuth = await this.authService.createAuth({
-        access_token: token,
-        expiration_date: new Date(),
-        user_id: dataUser.user_id,
-      })
-      
-      await queryRunner.manager.save(dataUser)
-      await queryRunner.manager.save(passwordEncrypted);
-      await queryRunner.manager.save(dataAuth);
-
-      await queryRunner.commitTransaction();
-      return {access_token: dataAuth.access_token}  
-    } catch (error) {
-      await queryRunner.rollbackTransaction()
-      throw error;
-    } finally {
-      await queryRunner.release();
-    }
+      return dataUser;
   };
+  public async getUserByEmail(email: string): Promise<User> {
+    const user: User = await this.userRepository.findOne({where: {email}})
+    if(!user) throw this.handleErrorService.handleError({
+      details: ['User not Found'], 
+      message: 'User not Found', 
+      statusCode: EnumErrorCodes.NOT_FOUND});
+
+      return user;
+  }
+  public async getUserById(user_id: string): Promise<User> {
+    const user: User = await this.userRepository.findOne({where: {user_id}})
+    if(!user) throw this.handleErrorService.handleError({
+      details: ['User not Found'], 
+      message: 'User not Found', 
+      statusCode: EnumErrorCodes.NOT_FOUND});
+
+      return user;
+  }
 };
 

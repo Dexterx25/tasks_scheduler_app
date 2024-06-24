@@ -1,7 +1,7 @@
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import * as auth from "express-basic-auth";
 import { config as configEnv } from "../configurations/config/envs";
-import { UserRegisterDTO, loginAdminUserDTO } from "src/modules/users/DTO";
+import { UserRegisterDTO, loginAdminUserDTO } from "src/modules/auth/DTO";
 
 export const configSwagger = async (app:any) => {
 

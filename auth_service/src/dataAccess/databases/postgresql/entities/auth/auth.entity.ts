@@ -13,8 +13,8 @@ export class Auth extends Timestamps {
   @Column({ type: "timestamp", select: false })
   expiration_date?: string;
 
-  @JoinColumn()
-  @OneToOne(_type => User, user => user.user_id)
-  user_id!: User;
+  @JoinColumn({ name: 'user_id' })
+  @OneToOne(_type => User, user => user.auths, { nullable: false })
+  user_id!: string;
 
 }

@@ -11,3 +11,8 @@ export interface IAccess {
     member: string;
   }
   
+
+  export interface ISignDataResponse {
+    token: string;
+    refreshToken: string;
+  }
