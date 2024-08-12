@@ -8,13 +8,13 @@
     * description of configuration variables and their potential values.
     */
    exports.config = {
-     app_name: ['TransactionsPayments'],
-     license_key: '16a22e2bbe0902cec6fe0c08af9353bfFFFFNRAL',
+     app_name: [process.env.app_name_new_relic],
+     license_key: process.env.ENV_license_key_new_relic,
      distributed_tracing: {
       enabled: true,
     },
     logging: {
-      level: 'info',
+      level: 'debug',
     },
     application_logging: {
       enabled: true,
