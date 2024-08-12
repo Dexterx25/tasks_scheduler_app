@@ -11,13 +11,14 @@ export class UserRepository extends RepositoryAbs {
         private readonly userRepository: MongoRepository<User>,
     ){super()}
     async create({
-        names, nikname, surnames, email
+        names, nikname, surnames, email, type_document_id
         }): Promise<User> {
         const intanceUser = await this.userRepository.create({
             names,
             nikname,
             surnames,
-            email
+            email,
+            type_document_id
          })
          return intanceUser
     }

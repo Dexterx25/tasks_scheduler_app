@@ -1,10 +1,11 @@
 import { ConfigModule } from '@nestjs/config';
 import { JWTService } from './jwt.service';
 import { Module } from '@nestjs/common';
+import { RedisModule } from '../redis';
 //import { RedisModule } from '../redis';
 
 @Module({
-  imports: [ ConfigModule],
+  imports: [ ConfigModule, RedisModule],
   providers: [JWTService],
   exports: [JWTService],
 })

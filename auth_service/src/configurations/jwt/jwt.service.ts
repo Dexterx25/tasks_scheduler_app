@@ -2,10 +2,14 @@ import { IAccess, IRefresh } from "./interfaces/";
 import { decode, verify, sign } from "jsonwebtoken";
 import { ConfigService } from "@nestjs/config";
 import { ForbiddenException, NotFoundException, Injectable } from "@nestjs/common";
+import { RedisService } from "../redis/redis.service";
 
 @Injectable()
 export class JWTService {
-    constructor( private readonly config: ConfigService) {}
+    constructor( 
+        private readonly config: ConfigService,
+        private readonly redis: RedisService,
+    ) {}
 
     decodeToken = (token: string) => {
         return decode(token);
@@ -31,23 +35,28 @@ export class JWTService {
 
     createAccess = async (payload: IAccess) => {
         const access: any = this.config.get<string>("JWT_ACCESS_KEY");
-        const token = sign(payload, access, { expiresIn: "8h" });
-        //await this.redis.setSessionValue("access", payload.id, token, 3600 * 8);
+        const token = sign(payload, access, { expiresIn: "0.5h" });
+        await this.redis.setSessionValue('access', payload.id, token, 3600 * 0.5);
         return token;
     };
 
     createRefresh = async (payload: IRefresh) => {
         const access: any = this.config.get<string>("JWT_REFRESH_KEY");
-        const token = sign(payload, access, { expiresIn: "2d" });
-       // await this.redis.setSessionValue("refresh", payload.id, token, 3600 * 24 * 14);
+        const token = sign(payload, access, { expiresIn: "0.7h" });
+        await this.redis.setSessionValue(
+            'refresh',
+            payload.id,
+            token,
+            3600 * 0.7,
+          );
         return token;
     };
 
     signToken = async (payload: any): Promise<ResponseSign>  => {
         const secret = this.config.get<string>("JWT_SIGN_KEY");
         if (!secret) throw new NotFoundException("Secret not Found");
-        const token = await sign(payload, secret, { expiresIn: '30m' });
-        const refreshToken = await this.createRefresh(payload);
+        const token = await this.createAccess({id: payload.user_id})
+        const refreshToken = await this.createRefresh({id: payload.user_id});
         return {access_token: token, refresh_token: refreshToken};
     };
 }

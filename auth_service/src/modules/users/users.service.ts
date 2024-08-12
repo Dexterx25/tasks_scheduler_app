@@ -13,12 +13,13 @@ export class UserService {
   ) {}
  
   public async createUser(data: UserRegisterDTO): Promise<User>{
-      const { names, nikname, surnames, email} = data;
+      const { names, nikname, surnames, email, type_document_id} = data;
       const dataUser: User = await this.userRepository.create({
         names,
         nikname,
         surnames,
-        email
+        email,
+        type_document_id,
       })
       return dataUser;
   };

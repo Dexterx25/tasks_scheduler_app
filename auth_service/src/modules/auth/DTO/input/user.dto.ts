@@ -5,6 +5,7 @@ import {
   import {
     IsNotEmpty,
   } from "class-validator";
+import { UUID } from "typeorm/driver/mongodb/bson.typings";
  
   export class UserRegisterDTO  {
     @IsNotEmpty()
@@ -19,6 +20,12 @@ import {
     })
     password!: string;
   
+    @IsNotEmpty()
+    @ApiProperty({
+      type: UUID
+    })
+    type_document_id!: string
+
     @IsNotEmpty()
     @ApiProperty({
       type: String,
